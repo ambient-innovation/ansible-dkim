@@ -3,6 +3,11 @@
   apt: pkg=postfix state=installed
   tags: postfix
 
+- name: postfix only listens to localhost
+  lineinfile: dest=/etc/postfix/main.cf regexp=^inet_interfaces line="inet_interfaces = 127.0.0.1"
+  notify:
+   - restart postfix
+
 - name: postfix milter_protocol is configured
   lineinfile: dest=/etc/postfix/main.cf regexp=^milter_protocol line="milter_protocol = 2"
   notify:
